@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Settings Overview - Knowledge Base Writer Portfolio</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="article-container">
+        <a href="../index.html#samples" class="back-link">← Back to Portfolio</a>
+        
+        <div class="article-header">
+            <h1 class="article-title">Advanced Settings: Complete Guide</h1>
+            <div class="article-meta">Category: Product Documentation | Last Updated: December 2024</div>
+        </div>
+
+        <article class="article-content">
+            <p>
+                Advanced Settings provide power users and administrators with granular control over their 
+                CloudSync experience. This guide covers all advanced configuration options, their use cases, 
+                and recommended settings for different scenarios.
+            </p>
+
+            <h2>Accessing Advanced Settings</h2>
+            <p>To access Advanced Settings:</p>
+            <ol>
+                <li>Click your profile icon in the top-right corner</li>
+                <li>Select "Settings" from the dropdown menu</li>
+                <li>Navigate to the "Advanced" tab</li>
+            </ol>
+            <p><strong>Note:</strong> Some advanced settings require administrator privileges or specific plan levels.</p>
+
+            <h2>Sync Configuration</h2>
+            <h3>Selective Sync</h3>
+            <p>Selective Sync allows you to choose which folders sync to your local device, saving disk space 
+            and bandwidth.</p>
+            <ul>
+                <li><strong>Enable Selective Sync:</strong> Toggle this option to enable folder selection</li>
+                <li><strong>Choose Folders:</strong> Select specific folders to sync locally</li>
+                <li><strong>Smart Sync:</strong> Automatically sync recently accessed files while keeping others cloud-only</li>
+            </ul>
+            <blockquote>
+                <strong>Use Case:</strong> If you have 500GB of files but only 100GB of local storage, 
+                use Selective Sync to keep only frequently accessed files on your device.
+            </blockquote>
+
+            <h3>Bandwidth Throttling</h3>
+            <p>Control how much bandwidth CloudSync uses for syncing:</p>
+            <ul>
+                <li><strong>Unlimited:</strong> Use all available bandwidth (default)</li>
+                <li><strong>Custom Limit:</strong> Set a maximum upload/download speed in Mbps</li>
+                <li><strong>Schedule:</strong> Set different limits for specific times of day</li>
+            </ul>
+            <p><strong>Recommended:</strong> Set a limit of 80% of your total bandwidth to leave room for 
+            other applications.</p>
+
+            <h3>Conflict Resolution</h3>
+            <p>Configure how CloudSync handles file conflicts when the same file is edited on multiple devices:</p>
+            <ul>
+                <li><strong>Ask Me:</strong> Prompt you to choose which version to keep (recommended)</li>
+                <li><strong>Keep Newer:</strong> Automatically keep the most recently modified version</li>
+                <li><strong>Keep Both:</strong> Save both versions with different names</li>
+            </ul>
+
+            <h2>Security Settings</h2>
+            <h3>Two-Factor Authentication (2FA)</h3>
+            <p>Enhance your account security with 2FA:</p>
+            <ol>
+                <li>Navigate to Security → Two-Factor Authentication</li>
+                <li>Choose your preferred method:
+                    <ul>
+                        <li><strong>Authenticator App:</strong> Use apps like Google Authenticator or Authy</li>
+                        <li><strong>SMS:</strong> Receive codes via text message</li>
+                        <li><strong>Hardware Key:</strong> Use a physical security key (YubiKey, etc.)</li>
+                    </ul>
+                </li>
+                <li>Follow the setup wizard to complete configuration</li>
+                <li>Save backup codes in a secure location</li>
+            </ol>
+
+            <h3>Session Management</h3>
+            <p>View and manage active sessions across all your devices:</p>
+            <ul>
+                <li><strong>Active Sessions:</strong> See all devices currently signed in</li>
+                <li><strong>Device Names:</strong> Label devices for easy identification</li>
+                <li><strong>Remote Sign Out:</strong> Sign out from specific devices</li>
+                <li><strong>Session Timeout:</strong> Automatically sign out inactive sessions after a set period</li>
+            </ul>
+
+            <h3>IP Whitelisting</h3>
+            <p>Restrict account access to specific IP addresses (Enterprise plans only):</p>
+            <ol>
+                <li>Enable IP Whitelisting in Security settings</li>
+                <li>Add allowed IP addresses or IP ranges</li>
+                <li>Configure exceptions for mobile devices (if needed)</li>
+            </ol>
+            <p><strong>Warning:</strong> If you enable IP whitelisting and your IP changes, you may be locked out. 
+            Ensure you have a backup access method.</p>
+
+            <h2>Sharing and Collaboration</h2>
+            <h3>Link Sharing Permissions</h3>
+            <p>Control default permissions for shared links:</p>
+            <ul>
+                <li><strong>View Only:</strong> Recipients can view but not download</li>
+                <li><strong>Download:</strong> Recipients can view and download</li>
+                <li><strong>Edit:</strong> Recipients can modify files (Professional/Enterprise)</li>
+                <li><strong>Password Protection:</strong> Require a password for all shared links</li>
+                <li><strong>Expiration:</strong> Set default expiration dates for shared links</li>
+            </ul>
+
+            <h3>Team Folder Permissions</h3>
+            <p>Configure default permissions for team folders (Professional/Enterprise):</p>
+            <ul>
+                <li><strong>Admin Access:</strong> Full control over folder settings</li>
+                <li><strong>Editor Access:</strong> Can add, edit, and delete files</li>
+                <li><strong>Viewer Access:</strong> Can only view and download files</li>
+                <li><strong>Custom Roles:</strong> Create custom permission sets for specific needs</li>
+            </ul>
+
+            <h2>Automation and Workflows</h2>
+            <h3>Automated Backups</h3>
+            <p>Set up automatic backups for important folders:</p>
+            <ol>
+                <li>Navigate to Automation → Backups</li>
+                <li>Click "Create Backup Rule"</li>
+                <li>Select source folder and destination</li>
+                <li>Choose backup frequency:
+                    <ul>
+                        <li>Real-time (immediate sync)</li>
+                        <li>Daily (at specified time)</li>
+                        <li>Weekly (on specific day)</li>
+                        <li>Monthly (on specific date)</li>
+                    </ul>
+                </li>
+                <li>Configure retention policy (how long to keep backups)</li>
+            </ol>
+
+            <h3>File Versioning</h3>
+            <p>Control how file versions are managed:</p>
+            <ul>
+                <li><strong>Version History:</strong> Enable to keep previous versions of files</li>
+                <li><strong>Retention Period:</strong> How long to keep old versions (30, 90, 365 days, or unlimited)</li>
+                <li><strong>Auto-Cleanup:</strong> Automatically delete versions older than retention period</li>
+                <li><strong>Version Limit:</strong> Maximum number of versions per file</li>
+            </ul>
+
+            <h2>Performance Optimization</h2>
+            <h3>Cache Settings</h3>
+            <p>Optimize local cache for better performance:</p>
+            <ul>
+                <li><strong>Cache Size:</strong> Set maximum cache size (default: 1GB)</li>
+                <li><strong>Cache Location:</strong> Choose where cache files are stored</li>
+                <li><strong>Auto-Cleanup:</strong> Automatically clear cache when it reaches size limit</li>
+            </ul>
+
+            <h3>Indexing Options</h3>
+            <p>Configure file indexing for faster search:</p>
+            <ul>
+                <li><strong>Full-Text Search:</strong> Index file contents for content search</li>
+                <li><strong>Index File Types:</strong> Choose which file types to index</li>
+                <li><strong>Background Indexing:</strong> Index files when system is idle</li>
+            </ul>
+
+            <h2>Integration Settings</h2>
+            <h3>Third-Party Integrations</h3>
+            <p>Connect CloudSync with other services:</p>
+            <ul>
+                <li><strong>Email Integration:</strong> Save email attachments directly to CloudSync</li>
+                <li><strong>Calendar Sync:</strong> Sync calendar events and attachments</li>
+                <li><strong>Slack Integration:</strong> Share files directly from Slack</li>
+                <li><strong>API Access:</strong> Generate API keys for custom integrations</li>
+            </ul>
+
+            <h2>Notification Preferences</h2>
+            <p>Customize what notifications you receive:</p>
+            <ul>
+                <li><strong>File Updates:</strong> Notify when files are modified</li>
+                <li><strong>Shared Links:</strong> Notify when someone accesses your shared links</li>
+                <li><strong>Team Activity:</strong> Notify about team folder changes</li>
+                <li><strong>Security Alerts:</strong> Notify about login attempts and security events</li>
+                <li><strong>Email Digest:</strong> Receive daily or weekly summaries</li>
+            </ul>
+
+            <h2>Data Management</h2>
+            <h3>Export Data</h3>
+            <p>Export all your data for backup or migration:</p>
+            <ol>
+                <li>Go to Data Management → Export</li>
+                <li>Select data types to export (files, settings, activity logs)</li>
+                <li>Choose export format (ZIP, JSON, or CSV)</li>
+                <li>Click "Start Export" and wait for email notification</li>
+                <li>Download export file from the provided link</li>
+            </ol>
+
+            <h3>Data Retention</h3>
+            <p>Configure how long deleted files are kept:</p>
+            <ul>
+                <li><strong>Trash Retention:</strong> 30, 60, or 90 days (default: 30)</li>
+                <li><strong>Permanent Deletion:</strong> Files are permanently deleted after retention period</li>
+                <li><strong>Extended Retention:</strong> Keep deleted files longer (Enterprise feature)</li>
+            </ul>
+
+            <h2>Recommended Settings by Use Case</h2>
+            <h3>For Individual Users</h3>
+            <ul>
+                <li>Enable Smart Sync to save local storage</li>
+                <li>Set conflict resolution to "Ask Me"</li>
+                <li>Enable 2FA for security</li>
+                <li>Configure automated backups for important folders</li>
+            </ul>
+
+            <h3>For Small Teams</h3>
+            <ul>
+                <li>Set up team folders with appropriate permissions</li>
+                <li>Configure link sharing defaults</li>
+                <li>Enable file versioning with 90-day retention</li>
+                <li>Set up email integration for seamless workflow</li>
+            </ul>
+
+            <h3>For Enterprise</h3>
+            <ul>
+                <li>Implement IP whitelisting for enhanced security</li>
+                <li>Create custom roles and permission sets</li>
+                <li>Configure extended data retention policies</li>
+                <li>Set up comprehensive audit logging</li>
+                <li>Enable SSO (Single Sign-On) integration</li>
+            </ul>
+
+            <h2>Need Help?</h2>
+            <p>If you need assistance configuring advanced settings:</p>
+            <ul>
+                <li>Contact our <a href="#">support team</a> for personalized help</li>
+                <li>Schedule a <a href="#">training session</a> with our experts</li>
+                <li>Join our <a href="#">community forum</a> to connect with other users</li>
+            </ul>
+        </article>
+    </div>
+</body>
+</html>
+

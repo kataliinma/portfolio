@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Integration Guide - Knowledge Base Writer Portfolio</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="article-container">
+        <a href="../index.html#samples" class="back-link">← Back to Portfolio</a>
+        
+        <div class="article-header">
+            <h1 class="article-title">API Integration Guide</h1>
+            <div class="article-meta">Category: Technical Documentation | Last Updated: December 2024</div>
+        </div>
+
+        <article class="article-content">
+            <p>
+                The CloudSync API allows you to programmatically access and manage your files, folders, 
+                and account settings. This guide provides everything you need to integrate our API into 
+                your application, including authentication, endpoint documentation, and code examples.
+            </p>
+
+            <h2>Base URL</h2>
+            <p>All API requests should be made to:</p>
+            <pre><code>https://api.cloudsync.com/v1</code></pre>
+
+            <h2>Authentication</h2>
+            <p>Our API uses OAuth 2.0 for authentication. You'll need to obtain an access token to make 
+            authenticated requests.</p>
+
+            <h3>Step 1: Register Your Application</h3>
+            <ol>
+                <li>Log in to your CloudSync account</li>
+                <li>Navigate to Settings → Developer → API Keys</li>
+                <li>Click "Create New Application"</li>
+                <li>Enter your application name and redirect URI</li>
+                <li>Copy your Client ID and Client Secret</li>
+            </ol>
+
+            <h3>Step 2: Obtain an Access Token</h3>
+            <p>Use the authorization code flow to obtain an access token:</p>
+            <pre><code>POST https://api.cloudsync.com/oauth/token
+Content-Type: application/json
+
+{
+  "grant_type": "authorization_code",
+  "client_id": "your_client_id",
+  "client_secret": "your_client_secret",
+  "code": "authorization_code",
+  "redirect_uri": "your_redirect_uri"
+}</code></pre>
+
+            <h3>Step 3: Include Token in Requests</h3>
+            <p>Include the access token in the Authorization header of all API requests:</p>
+            <pre><code>Authorization: Bearer your_access_token</code></pre>
+
+            <h2>Rate Limits</h2>
+            <p>API requests are rate-limited to ensure fair usage:</p>
+            <ul>
+                <li><strong>Free Tier:</strong> 100 requests per hour</li>
+                <li><strong>Professional Tier:</strong> 1,000 requests per hour</li>
+                <li><strong>Enterprise Tier:</strong> 10,000 requests per hour</li>
+            </ul>
+            <p>Rate limit information is included in response headers:</p>
+            <pre><code>X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+X-RateLimit-Reset: 1609459200</code></pre>
+
+            <h2>Core Endpoints</h2>
+
+            <h3>List Files</h3>
+            <p>Retrieve a list of files in a folder:</p>
+            <pre><code>GET /files?folder_id={folder_id}&limit=50&offset=0
+
+Response:
+{
+  "files": [
+    {
+      "id": "file_123",
+      "name": "document.pdf",
+      "size": 1024000,
+      "created_at": "2024-12-01T10:00:00Z",
+      "modified_at": "2024-12-01T15:30:00Z"
+    }
+  ],
+  "total": 1,
+  "limit": 50,
+  "offset": 0
+}</code></pre>
+
+            <h3>Upload File</h3>
+            <p>Upload a new file to a folder:</p>
+            <pre><code>POST /files/upload
+Content-Type: multipart/form-data
+
+{
+  "file": [binary data],
+  "folder_id": "folder_456",
+  "name": "new_document.pdf"
+}
+
+Response:
+{
+  "id": "file_789",
+  "name": "new_document.pdf",
+  "size": 2048000,
+  "url": "https://cloudsync.com/files/file_789",
+  "created_at": "2024-12-01T16:00:00Z"
+}</code></pre>
+
+            <h3>Download File</h3>
+            <p>Download a file by ID:</p>
+            <pre><code>GET /files/{file_id}/download
+
+Response: Binary file data
+Content-Type: application/octet-stream</code></pre>
+
+            <h3>Delete File</h3>
+            <p>Delete a file permanently:</p>
+            <pre><code>DELETE /files/{file_id}
+
+Response:
+{
+  "success": true,
+  "message": "File deleted successfully"
+}</code></pre>
+
+            <h3>Create Folder</h3>
+            <p>Create a new folder:</p>
+            <pre><code>POST /folders
+Content-Type: application/json
+
+{
+  "name": "My New Folder",
+  "parent_id": "folder_123"
+}
+
+Response:
+{
+  "id": "folder_456",
+  "name": "My New Folder",
+  "parent_id": "folder_123",
+  "created_at": "2024-12-01T16:30:00Z"
+}</code></pre>
+
+            <h2>Error Handling</h2>
+            <p>All errors follow a consistent format:</p>
+            <pre><code>{
+  "error": {
+    "code": "INVALID_REQUEST",
+    "message": "The request is missing required parameters",
+    "details": {
+      "field": "folder_id",
+      "reason": "required"
+    }
+  }
+}</code></pre>
+
+            <h3>Common Error Codes</h3>
+            <ul>
+                <li><strong>400 Bad Request:</strong> Invalid request parameters</li>
+                <li><strong>401 Unauthorized:</strong> Invalid or expired access token</li>
+                <li><strong>403 Forbidden:</strong> Insufficient permissions</li>
+                <li><strong>404 Not Found:</strong> Resource doesn't exist</li>
+                <li><strong>429 Too Many Requests:</strong> Rate limit exceeded</li>
+                <li><strong>500 Internal Server Error:</strong> Server error</li>
+            </ul>
+
+            <h2>Code Examples</h2>
+
+            <h3>Python Example</h3>
+            <pre><code>import requests
+
+class CloudSyncAPI:
+    def __init__(self, access_token):
+        self.base_url = "https://api.cloudsync.com/v1"
+        self.headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+    
+    def list_files(self, folder_id=None, limit=50, offset=0):
+        params = {"limit": limit, "offset": offset}
+        if folder_id:
+            params["folder_id"] = folder_id
+        
+        response = requests.get(
+            f"{self.base_url}/files",
+            headers=self.headers,
+            params=params
+        )
+        response.raise_for_status()
+        return response.json()
+    
+    def upload_file(self, file_path, folder_id, name=None):
+        if not name:
+            name = os.path.basename(file_path)
+        
+        with open(file_path, 'rb') as f:
+            files = {'file': f}
+            data = {
+                'folder_id': folder_id,
+                'name': name
+            }
+            response = requests.post(
+                f"{self.base_url}/files/upload",
+                headers={"Authorization": self.headers["Authorization"]},
+                files=files,
+                data=data
+            )
+        response.raise_for_status()
+        return response.json()
+
+# Usage
+api = CloudSyncAPI("your_access_token")
+files = api.list_files()
+print(files)</code></pre>
+
+            <h3>JavaScript Example</h3>
+            <pre><code>class CloudSyncAPI {
+  constructor(accessToken) {
+    this.baseUrl = 'https://api.cloudsync.com/v1';
+    this.accessToken = accessToken;
+  }
+
+  async request(endpoint, options = {}) {
+    const url = `${this.baseUrl}${endpoint}`;
+    const config = {
+      ...options,
+      headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    };
+
+    const response = await fetch(url, config);
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.statusText}`);
+    }
+    return response.json();
+  }
+
+  async listFiles(folderId = null, limit = 50, offset = 0) {
+    const params = new URLSearchParams({ limit, offset });
+    if (folderId) params.append('folder_id', folderId);
+    
+    return this.request(`/files?${params}`);
+  }
+
+  async uploadFile(file, folderId, name = null) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('folder_id', folderId);
+    if (name) formData.append('name', name);
+
+    return this.request('/files/upload', {
+      method: 'POST',
+      headers: {}, // Let browser set Content-Type for FormData
+      body: formData
+    });
+  }
+}
+
+// Usage
+const api = new CloudSyncAPI('your_access_token');
+const files = await api.listFiles();
+console.log(files);</code></pre>
+
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Store tokens securely:</strong> Never commit access tokens to version control</li>
+                <li><strong>Handle rate limits:</strong> Implement exponential backoff when rate limited</li>
+                <li><strong>Use pagination:</strong> Always paginate large result sets</li>
+                <li><strong>Cache responses:</strong> Cache static data to reduce API calls</li>
+                <li><strong>Handle errors gracefully:</strong> Implement proper error handling and retry logic</li>
+                <li><strong>Test in sandbox:</strong> Use our sandbox environment for testing</li>
+            </ul>
+
+            <h2>Additional Resources</h2>
+            <ul>
+                <li><a href="#">API Reference Documentation</a></li>
+                <li><a href="#">SDK Libraries</a></li>
+                <li><a href="#">Webhook Documentation</a></li>
+                <li><a href="#">API Status Page</a></li>
+            </ul>
+
+            <h2>Support</h2>
+            <p>For API-related questions or issues:</p>
+            <ul>
+                <li>Email: api-support@cloudsync.com</li>
+                <li>Developer Forum: <a href="#">forum.cloudsync.com</a></li>
+                <li>Documentation: <a href="#">docs.cloudsync.com/api</a></li>
+            </ul>
+        </article>
+    </div>
+</body>
+</html>
+
