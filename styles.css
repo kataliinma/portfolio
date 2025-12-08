@@ -26,7 +26,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -154,7 +154,7 @@ section {
 /* Samples Section */
 .samples-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     margin-top: 3rem;
 }
@@ -162,15 +162,112 @@ section {
 .sample-card {
     background-color: var(--bg-white);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 0;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.sample-card-header-bg {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    height: 130px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transform: skewY(-2deg);
+    transform-origin: top left;
+    width: 110%;
+    margin-left: -5%;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.sample-card-header-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.6) 40%, rgba(255, 255, 255, 0.85) 80%, rgba(255, 255, 255, 0.95) 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.sample-card-header-bg::before {
+    content: '';
+    position: absolute;
+    bottom: -25px;
+    left: -5%;
+    right: -5%;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 1) 100%);
+    clip-path: ellipse(110% 50px at 50% 0%);
+    z-index: 1;
+}
+
+.sample-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sample-header {
+    position: relative;
+    z-index: 3;
+    margin-bottom: 1rem;
+    padding-top: 0.5rem;
+}
+
+.sample-description {
+    position: relative;
+    z-index: 2;
+    margin-top: 0.5rem;
 }
 
 .sample-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.sample-card:hover .sample-card-header-bg::after {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 100%);
+}
+
+.sample-card:hover .sample-link {
+    transform: translateX(5px);
+    color: var(--primary-dark);
+}
+
+/* Background images for each card header */
+.sample-card-kaspersky .sample-card-header-bg {
+    background-image: url('images/background.jpg');
+}
+
+.sample-card-eyezon .sample-card-header-bg {
+    background-image: url('images/eyezon/background_new.png');
+}
+
+.sample-card-sibedge .sample-card-header-bg {
+    background-image: url('images/Sibedge/substrate-desktop.svg');
+}
+
+.sample-card-advanced .sample-card-header-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .sample-header {
@@ -210,11 +307,8 @@ section {
     font-weight: 600;
     display: inline-flex;
     align-items: center;
-    transition: color 0.3s ease;
-}
-
-.sample-link:hover {
-    color: var(--primary-dark);
+    transition: all 0.3s ease;
+    margin-top: auto;
 }
 
 /* Skills Section */
@@ -315,6 +409,7 @@ section {
 }
 
 /* Responsive Design */
+
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
@@ -351,8 +446,40 @@ section {
 
 .article-header {
     margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 2px solid var(--border-color);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.article-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    z-index: 0;
+}
+
+.article-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+.article-header .header-content {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 8px;
+    display: inline-block;
+    max-width: 100%;
 }
 
 .article-title {
@@ -466,14 +593,146 @@ section {
     position: relative;
 }
 
-.gallery-item:nth-child(5),
-.gallery-item:nth-child(6) {
+/* Kaspersky gallery specific layout */
+.kaspersky-gallery {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.kaspersky-gallery .gallery-item:nth-child(3),
+.kaspersky-gallery .gallery-item:nth-child(4) {
+    grid-column: span 1;
+}
+
+.kaspersky-gallery .gallery-item:nth-child(5),
+.kaspersky-gallery .gallery-item:nth-child(6) {
     grid-column: span 2;
 }
 
-.gallery-item:nth-child(7),
-.gallery-item:nth-child(8) {
+.kaspersky-gallery-bottom {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 1rem;
+}
+
+.kaspersky-gallery-bottom .gallery-item {
+    grid-column: span 1;
+}
+
+/* Eyezon gallery specific layout */
+.eyezon-gallery .gallery-item:nth-child(2),
+.eyezon-gallery .gallery-item:nth-child(3) {
     grid-column: span 2;
+}
+
+.eyezon-gallery .gallery-item:nth-child(5),
+.eyezon-gallery .gallery-item:nth-child(6),
+.eyezon-gallery .gallery-item:nth-child(7),
+.eyezon-gallery .gallery-item:nth-child(8) {
+    grid-column: span 1;
+}
+
+.eyezon-gallery .gallery-item {
+    overflow: visible;
+    position: relative;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.eyezon-gallery .gallery-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+}
+
+.eyezon-gallery .gallery-item:nth-child(2),
+.eyezon-gallery .gallery-item:nth-child(3) {
+    aspect-ratio: 16 / 9;
+}
+
+/* Line 2 - Seller Interface - all same height */
+.eyezon-gallery .gallery-item:nth-child(5),
+.eyezon-gallery .gallery-item:nth-child(6),
+.eyezon-gallery .gallery-item:nth-child(7),
+.eyezon-gallery .gallery-item:nth-child(8) {
+    aspect-ratio: 3 / 4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: stretch;
+}
+
+.eyezon-gallery .gallery-item:nth-child(5) img,
+.eyezon-gallery .gallery-item:nth-child(6) img,
+.eyezon-gallery .gallery-item:nth-child(7) img,
+.eyezon-gallery .gallery-item:nth-child(8) img {
+    flex: 1;
+    object-fit: cover;
+    margin-bottom: 0;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+}
+
+.eyezon-gallery .gallery-item:nth-child(10),
+.eyezon-gallery .gallery-item:nth-child(11) {
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: stretch;
+}
+
+/* Line 3 - both same size, match 1st image */
+.eyezon-gallery .gallery-item:nth-child(10) img,
+.eyezon-gallery .gallery-item:nth-child(11) img {
+    flex: 1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    min-height: 0;
+}
+
+/* Ensure images in same line have same height */
+.eyezon-gallery .gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    border: 1px solid var(--border-color);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transform-origin: center;
+    position: relative;
+}
+
+/* Remove margin-bottom when no caption */
+.eyezon-gallery .gallery-item:not(:has(.image-caption)) img {
+    margin-bottom: 0;
+}
+
+/* Hover animation like Kaspersky page */
+.eyezon-gallery .gallery-item:hover {
+    z-index: 100;
+}
+
+.eyezon-gallery .gallery-item:hover img {
+    transform: scale(1.5);
+    z-index: 1000;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Style for description divs */
+.eyezon-gallery > div[style*="grid-column"] {
+    padding: 1rem;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    margin-bottom: 1rem;
 }
 
 .gallery-item:hover {
@@ -512,6 +771,12 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Smaller captions for User Widget images */
+.eyezon-gallery .gallery-item:nth-child(2) .image-caption,
+.eyezon-gallery .gallery-item:nth-child(3) .image-caption {
+    font-size: 0.6rem;
 }
 
 @media (max-width: 1200px) {
